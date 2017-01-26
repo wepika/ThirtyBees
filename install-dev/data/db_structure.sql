@@ -8,6 +8,8 @@ CREATE TABLE `PREFIX_access` (
   `add`        INT(11)          NOT NULL,
   `edit`       INT(11)          NOT NULL,
   `delete`     INT(11)          NOT NULL,
+  FOREIGN KEY `fk_profile`(`id_profile`) REFERENCES `PREFIX_profile` (`id_profile`),
+  FOREIGN KEY `fk_tab`(`id_tab`) REFERENCES `PREFIX_tab` (`id_tab`),
   PRIMARY KEY (`id_profile`, `id_tab`)
 )
   ENGINE = ENGINE_TYPE
@@ -16,6 +18,8 @@ CREATE TABLE `PREFIX_access` (
 CREATE TABLE `PREFIX_accessory` (
   `id_product_1` INT(10) UNSIGNED NOT NULL,
   `id_product_2` INT(10) UNSIGNED NOT NULL,
+  FOREIGN KEY fk_product_1(`id_product_1`) REFERENCES PREFIX_product (`id_product`),
+  FOREIGN KEY fk_product_2(`id_product_2`) REFERENCES PREFIX_product (`id_product`),
   KEY `accessory_product` (`id_product_1`, `id_product_2`)
 )
   ENGINE = ENGINE_TYPE
@@ -47,6 +51,12 @@ CREATE TABLE `PREFIX_address` (
   `active`          TINYINT(1) UNSIGNED NOT NULL DEFAULT '1',
   `deleted`         TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_address`),
+  FOREIGN KEY `fk_country`(`id_country`) REFERENCES `PREFIX_country` (`id_country`),
+  FOREIGN KEY `fk_state`(`id_state`) REFERENCES `PREFIX_state` (`id_state`),
+  FOREIGN KEY `fk_customer`(`id_customer`) REFERENCES `PREFIX_customer` (`id_customer`),
+  FOREIGN KEY `fk_manufacturer`(`id_manufacturer`) REFERENCES `PREFIX_manufacturer` (`id_manufacturer`),
+  FOREIGN KEY `fk_supplier`(`id_supplier`) REFERENCES `PREFIX_supplier` (`id_supplier`),
+  FOREIGN KEY `fk_warehouse`(`id_warehouse`) REFERENCES `PREFIX_warehouse` (`id_warehouse`),
   KEY `address_customer` (`id_customer`),
   KEY `id_country` (`id_country`),
   KEY `id_state` (`id_state`),
@@ -3150,4 +3160,5 @@ CREATE TABLE `PREFIX_redis_servers` (
   `db`              INT(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id_redis_server`)
 )
-  ENGINE = ENGINE_TYPE DEFAULT CHARSET = utf8 COLLATION;
+  ENGINE = ENGINE_TYPE
+  DEFAULT CHARSET = utf8 COLLATION;
